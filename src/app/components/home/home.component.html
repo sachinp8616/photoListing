@@ -1,0 +1,68 @@
+<div class="row mt-5 justify-content-center">
+  <div
+    class="col-xs-12 col-sm-6 col-md-4 my-3"
+    *ngFor="let image of images | paginate: { itemsPerPage: 6, currentPage: q }"
+  >
+    <div class="card">
+      <div class="card-body">
+        <img
+          width="300"
+          height="300"
+          class="img-fluid"
+          [src]="image.url"
+          alt=""
+        />
+        <h6 class="mt-1">Title: {{ image.title }}</h6>
+        <p>ID: {{ image.id }}</p>
+        <p>
+          URL: <a [href]="image.url" target="_blank">{{ image.url }}</a>
+        </p>
+      </div>
+      <div class="card-footer text-center">
+        <button
+          [ngClass]="image.albumId ? 'btn btn-primary' : 'btn btn-danger'"
+          (click)="image.albumId ? compare(image) : remove(image.id, image)"
+        >
+          {{ image.albumId ? "Comapare" : "Remove" }}
+        </button>
+      </div>
+    </div>
+  </div>
+  <pagination-controls (pageChange)="q = $event"></pagination-controls>
+</div>
+
+<div class="mt-5 justify-content-center">
+  <div class="col">
+    <div class="table-responsive text-nowrap">
+      <table class="table table-bordered">
+        <thead class="bg-dark text-light">
+          <tr class="text-center">
+            <th colspan="4">COMPARISON TABLE</th>
+          </tr>
+          <tr>
+            <th>Photos</th>
+            <th>ID</th>
+            <th>URL</th>
+            <th>Title</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let item of data">
+            <td>
+              <img
+                [src]="item.url"
+                alt=""
+                width="100"
+                height="80"
+                class="img-fluid"
+              />
+            </td>
+            <td>{{ item.id }}</td>
+            <td>{{ item.url }}</td>
+            <td>{{ item.title }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+</div>
